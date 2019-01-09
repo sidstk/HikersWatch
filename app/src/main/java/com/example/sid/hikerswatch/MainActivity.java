@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
-                    Log.i("info","not");
                     return;
                 }
                 else
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startListening(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
-            //lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, time, 0, ll);
 
         }
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     if(addr!=null && addr.size()>0){
                         Log.i("address",addr.get(0).toString());
                         address.setText("Address: "+ addr.get(0).getAddressLine(0));
-                        //Toast.makeText(MapsActivity.this, addr.get(0).getAddressLine(0), Toast.LENGTH_LONG).show();
+                        Toast.makeText(MapsActivity.this, addr.get(0).getAddressLine(0), Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (IOException e) {
