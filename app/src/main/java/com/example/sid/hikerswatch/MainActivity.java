@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void update(){
-
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                     if(addr!=null && addr.size()>0){
                         Log.i("address",addr.get(0).toString());
                         address.setText("Address: "+ addr.get(0).getAddressLine(0));
-                        //Toast.makeText(MapsActivity.this, addr.get(0).getAddressLine(0), Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (IOException e) {
