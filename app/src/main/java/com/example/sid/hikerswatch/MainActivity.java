@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     LocationManager lm;
     LocationListener ll;
     int time = 1000;
-
+    String tag = "loci";
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -49,29 +49,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 2) {
-            if (resultCode == RESULT_OK) {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ){
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                else
+            Log.i(tag,"granted gps");
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ){
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, time, 0, ll);
+            }
+            else {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
             }
         }
     }
 
-    public void startListening(){
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+    private void startListening(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, time, 0, ll);
 
         }
+    }
+
+    private void update(){
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         ll = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Log.i("location",location.toString());
+                Log.i(tag,location.toString());
 
                 latitude.setText("Latitude: "+ location.getLatitude());
                 longitude.setText("Longitude: "+ location.getLongitude());
@@ -101,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     if(addr!=null && addr.size()>0){
                         Log.i("address",addr.get(0).toString());
                         address.setText("Address: "+ addr.get(0).getAddressLine(0));
-                        Toast.makeText(MapsActivity.this, addr.get(0).getAddressLine(0), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MapsActivity.this, addr.get(0).getAddressLine(0), Toast.LENGTH_LONG).show();
                     }
                 }
                 catch (IOException e) {
@@ -113,19 +117,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
 
-                Log.i("info","status changed");
+                Log.i(tag,"status changed");
             }
 
             @Override
             public void onProviderEnabled(String provider) {
 
-                Log.i("info",provider + "enabled");
+                Log.i(tag,provider + "enabled");
             }
 
             @Override
             public void onProviderDisabled(String provider) {
 
-                Log.i("info",provider + "disabled");
+                Log.i(tag,provider + "disabled");
             }
         };
 
